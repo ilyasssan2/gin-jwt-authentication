@@ -18,13 +18,15 @@ func IsAuth(c *gin.Context) {
 		return []byte(os.Getenv("ACCESS_TOKEN_S")), nil
 	})
 
-	if _, ok := token.Claims.(jwt.Claims); !ok && !token.Valid {
-		c.JSON(http.StatusNotAcceptable, gin.H{"message": "please try to login ", "error": err.Error()})
-		return
-	}
 	if err != nil || !token.Valid {
 		c.JSON(http.StatusNotAcceptable, gin.H{"message": "please try to login ", "error": err.Error()})
 		return
 	}
+
+	if _, ok := token.Claims.(jwt.Claims); !ok {
+		c.JSON(http.StatusNotAcceptable, gin.H{"message": "please try to login ", "error": err.Error()})
+		return
+	}
+
 	c.Next()
 }

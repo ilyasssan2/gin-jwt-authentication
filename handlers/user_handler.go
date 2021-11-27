@@ -8,7 +8,7 @@ import (
 func userHandlers(group *gin.RouterGroup) {
 	userGroup := group.Group("/user")
 	{
-		userGroup.GET("/login", controllers.Login)
-		userGroup.GET("/register", controllers.Register)
+		userGroup.POST("/login", controllers.Login)
+		userGroup.POST("/register", controllers.Register)
 	}
 }

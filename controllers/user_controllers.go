@@ -82,6 +82,9 @@ func Register(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
 	}
+
+	filePath := "public/users/" + res.InsertedID.(primitive.ObjectID).Hex()
+	os.Mkdir(filePath, 0755)
 	var jwts *utils.JWTS
 	jwts, err = utils.CreateJWT(res.InsertedID.(primitive.ObjectID))
 	if err != nil {
